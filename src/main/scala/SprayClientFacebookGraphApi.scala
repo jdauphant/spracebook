@@ -8,7 +8,7 @@ import HttpMethods._
 import spray.json._
 import DefaultJsonProtocol._
 import spray.httpx.SprayJsonSupport._
-import com.typesafe.scalalogging.slf4j.LazyLogging
+import com.typesafe.scalalogging.LazyLogging
 import FacebookGraphApiJsonProtocol._ 
 import akka.util.Timeout
 import scala.concurrent.duration._
@@ -245,7 +245,7 @@ class SprayClientFacebookGraphApi(conduit: ActorRef)(implicit timeout: Timeout) 
     if (response.status.isSuccess) response else {
 
       // https://developers.facebook.com/docs/reference/api/errors/
-      response.entity.asString.asJson.convertTo[ErrorResponse].error match {
+      response.entity.asString.parseJson.convertTo[ErrorResponse].error match {
         case e if e.error_subcode == Some(458) => throw DeAuthorizedException(e.message, e.`type`, e.code, e.error_subcode)
         case e if e.error_subcode == Some(459) => throw NoSessionException(e.message, e.`type`, e.code, e.error_subcode)
         case e if e.error_subcode == Some(460) => throw PasswordChangedException(e.message, e.`type`, e.code, e.error_subcode)

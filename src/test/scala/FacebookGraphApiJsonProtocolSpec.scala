@@ -12,7 +12,7 @@ class FacebookGraphApiJsonProtocolSpec extends Specification {
   "The FacebookGraphApiJsonProtocol" should {
     "extract photo name" in {
       val raw = slurp("fbphotos1")
-      val photos = raw.asJson.convertTo[Response[Photo]]
+      val photos = raw.parseJson.convertTo[Response[Photo]]
       photos.data.size must_== 1
       photos.data(0).name must beSome("I took this in 1963 http://t.co/uMlifaC1ce")
     }

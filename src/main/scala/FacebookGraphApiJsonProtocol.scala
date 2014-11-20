@@ -24,7 +24,7 @@ object FacebookGraphApiJsonProtocol extends DefaultJsonProtocol {
     import spray.httpx.unmarshalling.Unmarshaller
     import spray.http.MediaTypes._
     def decode(s: String): String = java.net.URLDecoder.decode(s, "UTF-8")
-    implicit val AccessTokenUnmarshaller = Unmarshaller.delegate[String, AccessToken](`text/plain`) { string => 
+    implicit val AccessTokenUnmarshaller = Unmarshaller.delegate[String, AccessToken](`text/plain`) { string =>
       val map = string.split('&').map(_.split('=')).map(a => (a(0), decode(a(1)))).toMap
       AccessToken(map("access_token"), map("expires").toLong)
     }

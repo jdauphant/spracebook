@@ -64,7 +64,6 @@ object FacebookGraphApiJsonProtocol extends DefaultJsonProtocol {
 
   case class User(
     id: String,
-    username: Option[String],
     name: Option[String],
     first_name: Option[String],
     middle_name: Option[String],
@@ -177,7 +176,7 @@ object FacebookGraphApiJsonProtocol extends DefaultJsonProtocol {
   implicit def responseFormat[T : JsonFormat] = jsonFormat2(Response.apply[T])
   implicit val userProfilePic = jsonFormat2(UserProfilePic)
   implicit val userProfilePicContainer = jsonFormat1(UserProfilePicContainer)
-  implicit val userFormat = jsonFormat10(User)
+  implicit val userFormat = jsonFormat9(User)
   implicit val pageFormat = jsonFormat3(Page)
   implicit val tabFormat = jsonFormat3(Tab)
   implicit val createdStory = jsonFormat2(CreatedStory)

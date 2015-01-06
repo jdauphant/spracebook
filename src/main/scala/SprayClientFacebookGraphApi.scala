@@ -23,7 +23,7 @@ class SprayClientFacebookGraphApi(conduit: ActorRef)(implicit timeout: Timeout) 
   implicit val ec = scala.concurrent.ExecutionContext.Implicits.global
 
 
-  val userFieldParams = "id,username,name,first_name,middle_name,last_name,email,link,gender,picture"
+  val userFieldParams = "id,name,first_name,middle_name,last_name,email,link,gender,picture"
   
   //This works now, via manual testing
   def debugToken(appAccessToken: String, userAccessToken: String): Future[TokenData] = {

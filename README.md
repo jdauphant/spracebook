@@ -10,11 +10,42 @@ Spracebook releases are in the central Maven repository. Snapshots are in [https
 "com.pongr" %% "spracebook" % "0.1.0-SNAPSHOT"
 ```
 
+### play project
+
+To integrate spracebook to a Play 2.3 project, add these lines to build.sbt : 
+
+```
+lazy val root = (project in file("."))
+  .enablePlugins(play.PlayScala)
+  .aggregate(spracebook)
+  .dependsOn(spracebook)
+lazy val spracebook = uri("git://github.com/jdauphant/spracebook.git")
+
+resolvers ++= Seq(
+  "Spray" at "http://repo.spray.io/"
+)
+
+libraryDependencies ++= Seq(
+  "io.spray"          %% "spray-client"         % "1.3.2",
+  "io.spray"          %% "spray-json"           % "1.3.1"
+)
+```
+
 ### Usage
 
 The Facebook Graph API is represented as a trait; each action that can be performed on a resource is represented as a function in this trait. Each function returns a `Future` of the response from the Graph API, parsed into a convenient case class.
 
 ``` scala
+import akka.actor.ActorSystem
+import akka.io.IO
+import akka.util.Timeout
+import spray.can.Http
+import spracebook.SprayClientFacebookGraphApi
+import akka.pattern.ask
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
+import scala.concurrent.Future
+
 //setup
 implicit val system = ActorSystem()
 implicit val timeout = Timeout(10 seconds)

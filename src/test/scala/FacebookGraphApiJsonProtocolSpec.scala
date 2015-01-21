@@ -7,7 +7,7 @@ import scala.io._
 import FacebookGraphApiJsonProtocol._
 
 class FacebookGraphApiJsonProtocolSpec extends Specification {
-  def slurp(file: String) = Source.fromFile("src/test/resources/" + file).getLines.mkString("\n")
+  def slurp(file: String) = Source.fromURL(getClass.getResource("/"+file)).getLines.mkString("\n")
 
   "The FacebookGraphApiJsonProtocol" should {
     "extract photo name" in {

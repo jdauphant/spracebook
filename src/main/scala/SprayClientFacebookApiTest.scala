@@ -14,7 +14,7 @@ import spray.can.Http
 import akka.pattern.ask
 import HttpMethods._
 
-object SprayCientFacebookApiTest {
+object SprayClientFacebookApiTest {
 
   def main(args: Array[String]) {
 
